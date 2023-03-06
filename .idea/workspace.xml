@@ -4,10 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1e710e8a-e051-4bd8-9a51-5400d2d5a97c" name="Changes" comment="init">
+    <list default="true" id="1e710e8a-e051-4bd8-9a51-5400d2d5a97c" name="Changes" comment="create redux app">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/src/main/java/edu/kit/algorithms/api/controllers/BaseController.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/edu/kit/algorithms/api/controllers/BaseController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/resources/application.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -23,7 +21,7 @@
     </option>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_COMMON_BRANCH" value="main" />
+    <option name="RECENT_COMMON_BRANCH" value="add_redux_toolkit" />
     <option name="ROOT_SYNC" value="SYNC" />
   </component>
   <component name="MarkdownSettingsMigration">
@@ -59,9 +57,9 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Facets",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.25431532",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.118343174",
+    "project.structure.side.proportion": "0.23423423",
     "spring.configuration.checksum": "8a5da52ed126447d359e70c05721a8aa",
     "ts.external.directory.path": "/Users/johannes/Documents/dev/java/algorithm-visualizer/ui/node_modules/typescript/lib",
     "vue.rearranger.settings.migration": "true"
@@ -92,7 +90,14 @@
       <option name="project" value="LOCAL" />
       <updated>1678039344702</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="create redux app">
+      <created>1678120512266</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1678120512266</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -100,6 +105,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="init" />
-    <option name="LAST_COMMIT_MESSAGE" value="init" />
+    <MESSAGE value="create redux app" />
+    <option name="LAST_COMMIT_MESSAGE" value="create redux app" />
   </component>
 </project>
