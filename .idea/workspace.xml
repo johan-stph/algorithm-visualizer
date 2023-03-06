@@ -67,7 +67,7 @@
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
-  <component name="RunManager" selected="Spring Boot.ApiApplication">
+  <component name="RunManager" selected="Compound.Start Dev + UI">
     <list>
       <item itemvalue="Compound.Start Dev + UI" />
       <item itemvalue="npm.start" />
