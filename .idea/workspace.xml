@@ -4,8 +4,26 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1e710e8a-e051-4bd8-9a51-5400d2d5a97c" name="Changes" comment="create redux app">
+    <list default="true" id="1e710e8a-e051-4bd8-9a51-5400d2d5a97c" name="Changes" comment="added tailwind">
+      <change afterPath="$PROJECT_DIR$/.idea/intellij-javadocs-4.0.1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ui/src/components/ErrorPage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/ui/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/ui/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/src/App.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/src/App.test.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/App.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/src/features/counter/Counter.module.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/src/features/counter/Counter.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/src/features/counter/counterAPI.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/src/features/counter/counterSlice.spec.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/src/features/counter/counterSlice.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/src/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/ui/src/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/src/logo.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/src/react-app-env.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/src/reportWebVitals.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/src/setupTests.ts" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -17,11 +35,17 @@
       <list>
         <option value="package.json" />
         <option value="Class" />
+        <option value="TypeScript JSX File" />
       </list>
     </option>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_COMMON_BRANCH" value="add_redux_toolkit" />
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="main" />
+      </map>
+    </option>
+    <option name="RECENT_COMMON_BRANCH" value="main" />
     <option name="ROOT_SYNC" value="SYNC" />
   </component>
   <component name="MarkdownSettingsMigration">
@@ -60,12 +84,13 @@
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.118343174",
     "project.structure.side.proportion": "0.23423423",
+    "settings.editor.selected.configurable": "project.propVCSSupport.DirectoryMappings",
     "spring.configuration.checksum": "8a5da52ed126447d359e70c05721a8aa",
     "ts.external.directory.path": "/Users/johannes/Documents/dev/java/algorithm-visualizer/ui/node_modules/typescript/lib",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
-  <component name="RunManager" selected="Compound.Start Dev + UI">
+  <component name="RunManager" selected="npm.start">
     <list>
       <item itemvalue="Compound.Start Dev + UI" />
       <item itemvalue="npm.start" />
@@ -97,7 +122,14 @@
       <option name="project" value="LOCAL" />
       <updated>1678120512266</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="added tailwind">
+      <created>1678121202494</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1678121202494</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -106,6 +138,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="init" />
     <MESSAGE value="create redux app" />
-    <option name="LAST_COMMIT_MESSAGE" value="create redux app" />
+    <MESSAGE value="added tailwind" />
+    <option name="LAST_COMMIT_MESSAGE" value="added tailwind" />
   </component>
 </project>
