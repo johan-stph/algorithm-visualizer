@@ -1,0 +1,66 @@
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<project version=\"4\">\n  <component name=\"AutoImportSettings\">\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\n  </component>\n  <component name=\"ChangeListManager\">\n    <list default=\"true\" id=\"1e710e8a-e051-4bd8-9a51-5400d2d5a97c\" name=\"Changes\" comment=\"init\">\n      <change beforePath=\"$PROJECT_DIR$/.idea/workspace.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/workspace.xml\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/api/src/main/java/edu/kit/algorithms/api/controllers/BaseController.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/api/src/main/java/edu/kit/algorithms/api/controllers/BaseController.java\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/api/src/main/resources/application.properties\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/api/src/main/resources/application.yaml\" afterDir=\"false\" />\n    </list>\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\n  </component>\n  <component name=\"FileTemplateManagerImpl\">\n    <option name=\"RECENT_TEMPLATES\">\n      <list>\n        <option value=\"package.json\" />\n        <option value=\"Class\" />\n      </list>\n    </option>\n  </component>\n  <component name=\"Git.Settings\">\n    <option name=\"RECENT_COMMON_BRANCH\" value=\"main\" />\n    <option name=\"ROOT_SYNC\" value=\"SYNC\" />\n  </component>\n  <component name=\"MarkdownSettingsMigration\">\n    <option name=\"stateVersion\" value=\"1\" />\n  </component>\n  <component name=\"MavenImportPreferences\">\n    <option name=\"importingSettings\">\n      <MavenImportingSettings>\n        <option name=\"workspaceImportEnabled\" value=\"true\" />\n      </MavenImportingSettings>\n    </option>\n  </component>\n  <component name=\"ProjectId\" id=\"2Mbace7j4jZY1MTlExVKglj3pa6\" />\n  <component name=\"ProjectLevelVcsManager\" settingsEditedManually=\"true\" />\n  <component name=\"ProjectViewState\">\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\n    <option name=\"showLibraryContents\" value=\"true\" />\n  </component>\n  <component name=\"PropertiesComponent\"><![CDATA[{\n  \"keyToString\": {\n    \"RequestMappingsPanelOrder0\": \"0\",\n    \"RequestMappingsPanelOrder1\": \"1\",\n    \"RequestMappingsPanelWidth0\": \"75\",\n    \"RequestMappingsPanelWidth1\": \"75\",\n    \"RunOnceActivity.OpenProjectViewOnStart\": \"true\",\n    \"RunOnceActivity.ShowReadmeOnStart\": \"true\",\n    \"SHARE_PROJECT_CONFIGURATION_FILES\": \"true\",\n    \"SONARLINT_PRECOMMIT_ANALYSIS\": \"true\",\n    \"WebServerToolWindowFactoryState\": \"false\",\n    \"jdk.selected.JAVA_MODULE\": \"corretto-17\",\n    \"node.js.detected.package.eslint\": \"true\",\n    \"node.js.detected.package.tslint\": \"true\",\n    \"node.js.selected.package.eslint\": \"(autodetect)\",\n    \"node.js.selected.package.tslint\": \"(autodetect)\",\n    \"nodejs_package_manager_path\": \"npm\",\n    \"project.structure.last.edited\": \"Facets\",\n    \"project.structure.proportion\": \"0.0\",\n    \"project.structure.side.proportion\": \"0.25431532\",\n    \"spring.configuration.checksum\": \"8a5da52ed126447d359e70c05721a8aa\",\n    \"ts.external.directory.path\": \"/Users/johannes/Documents/dev/java/algorithm-visualizer/ui/node_modules/typescript/lib\",\n    \"vue.rearranger.settings.migration\": \"true\"\n  }\n}]]></component>\n  <component name=\"RunManager\" selected=\"Compound.Start Dev + UI\">\n    <list>\n      <item itemvalue=\"Compound.Start Dev + UI\" />\n      <item itemvalue=\"npm.start\" />\n      <item itemvalue=\"Spring Boot.ApiApplication\" />\n    </list>\n  </component>\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\n  <component name=\"TaskManager\">\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\n      <changelist id=\"1e710e8a-e051-4bd8-9a51-5400d2d5a97c\" name=\"Changes\" comment=\"\" />\n      <created>1678038817338</created>\n      <option name=\"number\" value=\"Default\" />\n      <option name=\"presentableId\" value=\"Default\" />\n      <updated>1678038817338</updated>\n      <workItem from=\"1678038818420\" duration=\"781000\" />\n      <workItem from=\"1678040007333\" duration=\"3871000\" />\n    </task>\n    <task id=\"LOCAL-00001\" summary=\"init\">\n      <created>1678039344702</created>\n      <option name=\"number\" value=\"00001\" />\n      <option name=\"presentableId\" value=\"LOCAL-00001\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1678039344702</updated>\n    </task>\n    <option name=\"localTasksCounter\" value=\"2\" />\n    <servers />\n  </component>\n  <component name=\"TypeScriptGeneratedFilesManager\">\n    <option name=\"version\" value=\"3\" />\n  </component>\n  <component name=\"VcsManagerConfiguration\">\n    <MESSAGE value=\"init\" />\n    <option name=\"LAST_COMMIT_MESSAGE\" value=\"init\" />\n  </component>\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision 780eed61cb8082154baa5498f59c4094085d76c3)
++++ b/.idea/workspace.xml	(date 1678087747634)
+@@ -4,11 +4,7 @@
+     <option name="autoReloadType" value="SELECTIVE" />
+   </component>
+   <component name="ChangeListManager">
+-    <list default="true" id="1e710e8a-e051-4bd8-9a51-5400d2d5a97c" name="Changes" comment="init">
+-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/api/src/main/java/edu/kit/algorithms/api/controllers/BaseController.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/edu/kit/algorithms/api/controllers/BaseController.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/api/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/resources/application.yaml" afterDir="false" />
+-    </list>
++    <list default="true" id="1e710e8a-e051-4bd8-9a51-5400d2d5a97c" name="Changes" comment="changed workspace.xml" />
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+@@ -83,7 +79,7 @@
+       <option name="presentableId" value="Default" />
+       <updated>1678038817338</updated>
+       <workItem from="1678038818420" duration="781000" />
+-      <workItem from="1678040007333" duration="3871000" />
++      <workItem from="1678040007333" duration="4284000" />
+     </task>
+     <task id="LOCAL-00001" summary="init">
+       <created>1678039344702</created>
+@@ -92,7 +88,21 @@
+       <option name="project" value="LOCAL" />
+       <updated>1678039344702</updated>
+     </task>
+-    <option name="localTasksCounter" value="2" />
++    <task id="LOCAL-00002" summary="create-react-app">
++      <created>1678087361628</created>
++      <option name="number" value="00002" />
++      <option name="presentableId" value="LOCAL-00002" />
++      <option name="project" value="LOCAL" />
++      <updated>1678087361628</updated>
++    </task>
++    <task id="LOCAL-00003" summary="changed workspace.xml">
++      <created>1678087604960</created>
++      <option name="number" value="00003" />
++      <option name="presentableId" value="LOCAL-00003" />
++      <option name="project" value="LOCAL" />
++      <updated>1678087604960</updated>
++    </task>
++    <option name="localTasksCounter" value="4" />
+     <servers />
+   </component>
+   <component name="TypeScriptGeneratedFilesManager">
+@@ -100,6 +110,8 @@
+   </component>
+   <component name="VcsManagerConfiguration">
+     <MESSAGE value="init" />
+-    <option name="LAST_COMMIT_MESSAGE" value="init" />
++    <MESSAGE value="create-react-app" />
++    <MESSAGE value="changed workspace.xml" />
++    <option name="LAST_COMMIT_MESSAGE" value="changed workspace.xml" />
+   </component>
+ </project>
+\ No newline at end of file
