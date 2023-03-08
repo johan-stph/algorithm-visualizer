@@ -7,14 +7,19 @@ import App from './App';
 import './index.css';
 import {createBrowserRouter, RouterProvider,} from "react-router-dom";
 import Error404Page from "./components/ErrorPage";
+import {CostEfficientAllocationComponent} from "./components/CostEfficientAllocationComponent";
 
 const router = createBrowserRouter([
-    {
-        path: "/",
-        element: <App/>,
-        errorElement: <Error404Page></Error404Page>
-    }
-],
+        {
+            path: "/",
+            element: <App/>,
+            errorElement: <Error404Page></Error404Page>
+        },
+        {
+            path: "/cost-efficient-allocation",
+            element: <CostEfficientAllocationComponent/>,
+        }
+    ],
 );
 
 const container = document.getElementById('root')!;
