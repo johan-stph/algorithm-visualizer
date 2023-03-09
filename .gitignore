@@ -9,6 +9,7 @@ target/
 .idea/compiler.xml
 .idea/libraries/
 .idea/sonarlint/issuestore/index.pb
+.idea/sonarlint
 *.iws
 *.iml
 *.ipr
