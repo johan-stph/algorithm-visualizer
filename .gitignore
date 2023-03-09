@@ -10,6 +10,7 @@ target/
 .idea/libraries/
 .idea/sonarlint/issuestore/index.pb
 .idea/sonarlint
+.idea
 *.iws
 *.iml
 *.ipr
