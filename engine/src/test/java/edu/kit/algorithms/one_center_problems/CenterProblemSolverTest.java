@@ -13,6 +13,42 @@ import static org.junit.jupiter.api.Assertions.assertIterableEquals;
 class CenterProblemSolverTest {
 
 
+
+    @Test
+    void solveOneCenterUnWeightedL2() {
+        List<Point> points = List.of(
+                new Point(5, 10),
+                new Point(7, 6),
+                new Point(4, 2),
+                new Point(10, 4)
+        );
+        var centerSolver = new CenterProblemSolver(points.stream()
+                .map(p -> new PointWithWeight(p, 1.0))
+                .toList());
+        var result = centerSolver.solveOneCenterUnweightedWithL2(1);
+        assertEquals(1, result.optimalPoint().size());
+        assertEquals(new Point(6.07, 5.80),
+                roundPoint(result.optimalPoint().get(0)));
+        assertEquals(18.74, roundValue(Math.pow(result.cost(), 2)));
+    }
+
+    @Test
+    void solveOneCenterWeightedL2() {
+        List<PointWithWeight> points = List.of(
+                new PointWithWeight(new Point(5, 10), 1),
+                new PointWithWeight(new Point(7, 6), 1),
+                new PointWithWeight(new Point(4, 2), 1),
+                new PointWithWeight(new Point(10, 4), 1)
+        );
+        var centerSolver = new CenterProblemSolver(points);
+        var result = centerSolver.solveOneCenterUnweightedWithL2(150);
+        assertEquals(1, result.optimalPoint().size());
+        assertEquals(new Point(6.07, 5.80),
+                roundPoint(result.optimalPoint().get(0)));
+        assertEquals(1.73, roundValue(result.cost() * 60));
+    }
+
+
     @Test
     void solveOneCenterWeighted() {
         List<PointWithWeight> points = List.of(
@@ -25,13 +61,8 @@ class CenterProblemSolverTest {
         var centerSolver = new CenterProblemSolver(points);
         var result = centerSolver.solveOneCenterWeightedWithL1(1);
         assertEquals(1, result.optimalPoint().size());
-        assertEquals(new Point(8.17, 3.71), new Point(
-                Math.round(result.optimalPoint().get(0).x() * 100) / 100.0,
-                Math.round(result.optimalPoint().get(0).y() * 100) / 100.0)
-        );
-        assertEquals(55.06, Math.round(
-                result.cost() * 100) / 100.0
-        );
+        assertEquals(new Point(8.17, 3.71), roundPoint(result.optimalPoint().get(0)));
+        assertEquals(55.06, roundValue(result.cost()));
     }
 
     @Test
@@ -50,19 +81,11 @@ class CenterProblemSolverTest {
                         new Point(8, 6.5),
                         new Point(7.5, 7)
                 ), List.of(
-                        new Point(
-                                Math.round(result.optimalPoint().get(0).x() * 100) / 100.0,
-                                Math.round(result.optimalPoint().get(0).y() * 100) / 100.0
-                        ),
-                        new Point(
-                                Math.round(result.optimalPoint().get(1).x() * 100) / 100.0,
-                                Math.round(result.optimalPoint().get(1).y() * 100) / 100.0
-                        )
+                        roundPoint(result.optimalPoint().get(0)),
+                        roundPoint(result.optimalPoint().get(1))
                 )
         );
-        assertEquals(9.5, Math.round(
-                result.cost() * 100) / 100.0
-        );
+        assertEquals(9.5, roundValue(result.cost()));
 
     }
 
@@ -89,10 +112,17 @@ class CenterProblemSolverTest {
     void testTransformationBack() {
         var centerSolver = new CenterProblemSolver(new ArrayList<>());
         var transformedBack = centerSolver.transformBack(new Point(14.5, -0.5));
-        assertEquals(new Point(7.5, 7), new Point(
-                Math.round(transformedBack.x() * 100) / 100.0,
-                Math.round(transformedBack.y() * 100) / 100.0)
-        );
+        assertEquals(new Point(7.5, 7), roundPoint(transformedBack));
 
+    }
+
+    private Point roundPoint(Point point) {
+        return new Point(
+                roundValue(point.x()),
+                roundValue(point.y())
+        );
+    }
+    private double roundValue(double value) {
+        return Math.round(value * 100) / 100.0;
     }
 }
