@@ -1,4 +1,4 @@
-package edu.kit.algorithms.cost_efficient_allocation;
+package edu.kit.algorithms.strategy_scm.cost_efficient_allocation;
 
 
 import org.junit.jupiter.api.Test;

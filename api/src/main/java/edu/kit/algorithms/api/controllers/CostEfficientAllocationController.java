@@ -1,7 +1,7 @@
 package edu.kit.algorithms.api.controllers;
 
 
-import edu.kit.algorithms.cost_efficient_allocation.CostEfficientAllocation;
+import edu.kit.algorithms.strategy_scm.cost_efficient_allocation.CostEfficientAllocation;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

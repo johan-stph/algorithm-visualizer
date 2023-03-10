@@ -1,4 +1,4 @@
-package edu.kit.algorithms.one_median_problems;
+package edu.kit.algorithms.strategy_scm.one_median_problems;
 
 import edu.kit.algorithms.utils.Point;
 import edu.kit.algorithms.utils.PointWithWeight;

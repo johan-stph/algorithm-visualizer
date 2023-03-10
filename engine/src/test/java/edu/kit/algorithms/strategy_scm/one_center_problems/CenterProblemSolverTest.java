@@ -1,7 +1,9 @@
-package edu.kit.algorithms.one_center_problems;
+package edu.kit.algorithms.strategy_scm.one_center_problems;
+
 
 import edu.kit.algorithms.utils.Point;
 import edu.kit.algorithms.utils.PointWithWeight;
+import edu.kit.algorithms.utils.RoundingUtils;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -123,6 +125,6 @@ class CenterProblemSolverTest {
         );
     }
     private double roundValue(double value) {
-        return Math.round(value * 100) / 100.0;
+        return RoundingUtils.round(value, 2);
     }
 }

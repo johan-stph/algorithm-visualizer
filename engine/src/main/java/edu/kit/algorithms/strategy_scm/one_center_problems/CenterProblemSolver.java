@@ -1,8 +1,8 @@
-package edu.kit.algorithms.one_center_problems;
+package edu.kit.algorithms.strategy_scm.one_center_problems;
 
-import edu.kit.algorithms.metric.L1Metric;
-import edu.kit.algorithms.metric.L2Metric;
-import edu.kit.algorithms.metric.Metric;
+import edu.kit.algorithms.strategy_scm.metric.L1Metric;
+import edu.kit.algorithms.strategy_scm.metric.L2Metric;
+import edu.kit.algorithms.strategy_scm.metric.Metric;
 import edu.kit.algorithms.utils.Point;
 import edu.kit.algorithms.utils.PointWithWeight;
 import edu.kit.algorithms.utils.Tupel;
