@@ -1,4 +1,5 @@
-package edu.kit.algorithms.network_based;
+package edu.kit.algorithms.strategy_scm.network_based;
+
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

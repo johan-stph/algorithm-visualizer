@@ -1,4 +1,4 @@
-package edu.kit.algorithms.network_based;
+package edu.kit.algorithms.strategy_scm.network_based;
 
 import org.apache.commons.math3.linear.MatrixUtils;
 import org.apache.commons.math3.linear.RealMatrix;

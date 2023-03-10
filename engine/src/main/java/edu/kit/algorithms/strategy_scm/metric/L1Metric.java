@@ -1,4 +1,4 @@
-package edu.kit.algorithms.metric;
+package edu.kit.algorithms.strategy_scm.metric;
 
 import edu.kit.algorithms.utils.Point;
 
