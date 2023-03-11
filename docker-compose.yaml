@@ -1,0 +1,17 @@
+version: '3'
+
+services:
+  web:
+    build:
+      context: ./ui
+
+    ports:
+      - "3000:80"
+    depends_on:
+      - api
+
+  api:
+    build:
+      context: ./api
+    ports:
+      - "8080:8080"
