@@ -48,11 +48,17 @@ public class SimplexSolver {
                 .orElseThrow(
                         () -> new IllegalStateException("No most negative row index found")
                 );
-        int getPivotRowIndex = IntStream.range(0, currentTableau.simplexTable()[getPivotColumn].length)
-                .reduce((i, j) -> currentTableau.simplexTable()[getPivotColumn][i] < currentTableau.simplexTable()[getPivotColumn][j] ? i : j)
-                .orElseThrow(
-                        () -> new IllegalStateException("No pivot column index found")
-                );
+        double[] pivotRowHelper = IntStream.range(0, currentTableau.rightSide().length)
+                .mapToDouble(i -> currentTableau.rightSide()[i] /currentTableau.simplexTable()[i][getPivotColumn])
+                .toArray();
+        int getPivotRowIndex = 0;
+        double smallestPivotHelper = -1;
+        for (int i = 0; i < pivotRowHelper.length; i++) {
+            if (pivotRowHelper[i] > 0 && (pivotRowHelper[i] < smallestPivotHelper || smallestPivotHelper == -1)) {
+                smallestPivotHelper = pivotRowHelper[i];
+                getPivotRowIndex = i;
+            }
+        }
 
         double pivotElement = currentTableau.simplexTable()[getPivotRowIndex][getPivotColumn];
         return new PivotWrapper(getPivotColumn, getPivotRowIndex, pivotElement);
