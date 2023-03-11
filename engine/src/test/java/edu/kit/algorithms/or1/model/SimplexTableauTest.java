@@ -1,9 +1,5 @@
-package edu.kit.algorithms.or1;
+package edu.kit.algorithms.or1.model;
 
-import edu.kit.algorithms.or1.model.EquationUtils;
-import edu.kit.algorithms.or1.model.MaxOrMin;
-import edu.kit.algorithms.or1.model.SimplexModel;
-import edu.kit.algorithms.utils.RoundingUtils;
 import edu.kit.algorithms.utils.Tupel;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,9 +8,10 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class SimplexSolverTest {
+class SimplexTableauTest {
 
     private SimplexModel simplexModel;
+
     @BeforeEach
     void setUp() {
         String[] variables = {"x1", "x2"};
@@ -41,16 +38,25 @@ class SimplexSolverTest {
     }
 
     @Test
-    void solve() {
-        SimplexSolver simplexSolver = new SimplexSolver();
-        var result = simplexSolver.solveTableau(simplexModel.toTablou());
-        assertEquals(3, result.size());
-        assertEquals(round(800/3.0),
-                round(result.get(result.size() - 1).goalFunctionValue()));
+    void makeToBigSimplexTable() {
+        double [][] expected = {
+                {-30.0, -25, 0},
+                {1, 1, 10},
+                {5, 2, 30},
+                {0, 1, 9}
+        };
+        double[][] result = simplexModel.toTablou().makeToBigSimplexTable();
+        assertArrayEquals(expected, result);
     }
 
-
-    private double round(double value) {
-        return RoundingUtils.round(value, 3);
+    @Test
+    void testConversion() {
+        SimplexTableau expected = simplexModel.toTablou();
+        double[][] result = expected.makeToBigSimplexTable();
+        SimplexTableau tableau = SimplexTableau.fromBigSimplexTable(result,
+                expected.baseVariables(),
+                expected.nonBaseVariables()
+                );
+        assertEquals(expected, tableau);
     }
 }
