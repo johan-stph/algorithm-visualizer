@@ -15,6 +15,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class SimplexSolverTest {
 
     private SimplexModel simplexModel;
+    private SimplexModel simplexModelUnlimited;
     @BeforeEach
     void setUp() {
         String[] variables = {"x1", "x2"};
@@ -22,6 +23,11 @@ class SimplexSolverTest {
         double[][] constraints = {
                 {1, 1},
                 {5, 2},
+                {0, 1}
+        };
+        double[][] constraintsUnlimited = {
+                {-1, 1},
+                {-5, 2},
                 {0, 1}
         };
         List<Tupel<EquationUtils, Double>> constraintsList = List.of(
@@ -38,14 +44,31 @@ class SimplexSolverTest {
                 constraintsList
         );
 
+        simplexModelUnlimited = new SimplexModel(
+                variables,
+                goalCoefficient,
+                MaxOrMin.MAX,
+                constraintsUnlimited,
+                constraintsList
+        );
+
     }
 
     @Test
     void solve() {
         SimplexSolver simplexSolver = new SimplexSolver();
         var result = simplexSolver.solveTableau(simplexModel.toTablou());
+        assertEquals(3, result.simplexTableaus().size());
         assertEquals(round(800/3.0),
-                round(result.get(result.size() - 1).goalFunctionValue()));
+                round(result.simplexTableaus().get(result.simplexTableaus().size() - 1).goalFunctionValue()));
+    }
+
+    @Test
+    void solveUnlimited() {
+        SimplexSolver simplexSolver = new SimplexSolver();
+        var result = simplexSolver.solveTableau(simplexModelUnlimited.toTablou());
+        assertEquals(1, result.simplexTableaus().size());
+        assertTrue(result.isUnlimited());
     }
 
 

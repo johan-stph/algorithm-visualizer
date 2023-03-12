@@ -6,10 +6,9 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
-class SimplexModelTest {
+class SimplexTableauTest {
 
     private SimplexModel simplexModel;
 
@@ -39,27 +38,25 @@ class SimplexModelTest {
     }
 
     @Test
-    void isStandardForm() {
-        assertTrue(simplexModel.isStandardForm());
+    void makeToBigSimplexTable() {
+        double [][] expected = {
+                {-30.0, -25, 0},
+                {1, 1, 10},
+                {5, 2, 30},
+                {0, 1, 9}
+        };
+        double[][] result = simplexModel.toTablou().makeToBigSimplexTable();
+        assertArrayEquals(expected, result);
     }
 
     @Test
-    void toTablou() {
-        SimplexTableau simplex = new SimplexTableau(
-                new double[][]{
-                        {1, 1},
-                        {5, 2},
-                        {0, 1}
-                },
-                new String[]{"x3", "x4", "x5"},
-                new String[]{"x1", "x2"},
-                new double[]{10.0, 30.0, 9.0},
-                new double[]{-30.0, -25.0},
-                0,
-                null
-        );
-
-        SimplexTableau simplexTableau = simplexModel.toTablou();
-        assertEquals(simplex, simplexTableau);
+    void testConversion() {
+        SimplexTableau expected = simplexModel.toTablou();
+        double[][] result = expected.makeToBigSimplexTable();
+        SimplexTableau tableau = SimplexTableau.fromBigSimplexTable(result,
+                expected.baseVariables(),
+                expected.nonBaseVariables()
+                );
+        assertEquals(expected, tableau);
     }
 }

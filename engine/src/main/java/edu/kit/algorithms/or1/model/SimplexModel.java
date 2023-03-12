@@ -38,7 +38,8 @@ public class SimplexModel {
                     variables,
                     constraintEquations.stream().mapToDouble(Tupel::second).toArray(),
                     Arrays.stream(goalCoefficients).map(x -> -x).toArray(),
-                    0);
+                    0,
+                    null);
         }
         return null;
     }
