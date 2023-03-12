@@ -2,6 +2,7 @@ package edu.kit.algorithms.or1.model;
 
 import java.util.Arrays;
 import java.util.Objects;
+import java.util.stream.IntStream;
 
 public record SimplexTableau(
         double[][] simplexTable,
@@ -9,7 +10,9 @@ public record SimplexTableau(
         String[] nonBaseVariables,
         double[] rightSide,
         double[] goalCoefficients,
-        double goalFunctionValue
+        double goalFunctionValue,
+
+        Object notes
 
 
 
@@ -81,6 +84,7 @@ public record SimplexTableau(
             rightSide[i] = simplexTable[i + 1][simplexTable[0].length - 1];
         }
         System.arraycopy(simplexTable[0], 0, goalCoefficients, 0, simplexTable[0].length - 1);
-        return new SimplexTableau(newSimplexTable, baseVariable, nonBaseVariable, rightSide, goalCoefficients, goalFunctionValue);
+        return new SimplexTableau(newSimplexTable, baseVariable, nonBaseVariable, rightSide, goalCoefficients, goalFunctionValue, null);
     }
+
 }

@@ -1,5 +1,6 @@
 package edu.kit.algorithms.or1;
 
+import edu.kit.algorithms.or1.model.PivotWrapper;
 import edu.kit.algorithms.or1.model.SimplexTableau;
 
 import java.util.ArrayList;
@@ -10,23 +11,26 @@ import java.util.stream.IntStream;
 public class SimplexSolver {
 
 
-    public List<SimplexTableau> solveTableau(SimplexTableau simplexTableau) {
+    public ResultSimplexTableaus solveTableau(SimplexTableau simplexTableau) {
         // check if tableau is already solved
         if (simplexTableau.isSolved()) {
-            return Collections.singletonList(simplexTableau);
+            return new ResultSimplexTableaus(Collections.singletonList(simplexTableau), false);
         }
         List<SimplexTableau> output = new ArrayList<>();
         output.add(simplexTableau);
         SimplexTableau currentTableau = simplexTableau;
 
         while (!currentTableau.isSolved()) {
-            currentTableau = performSimplexStep(currentTableau);
+            if (isUnLimited(currentTableau)) {
+                return new ResultSimplexTableaus(output, true);
+            }
+            currentTableau = performSimplexStepPaul(currentTableau);
             output.add(currentTableau);
         }
-        return output;
+        return new ResultSimplexTableaus(output, false);
     }
 
-    private SimplexTableau performSimplexStep(SimplexTableau simplexTableau) {
+    private SimplexTableau performSimplexStepPaul(SimplexTableau simplexTableau) {
         PivotWrapper pivotElement = getPivotElement(simplexTableau);
 
         // new baseVariables
@@ -36,68 +40,67 @@ public class SimplexSolver {
         newNonBaseVariables[pivotElement.pivotColumn()] = simplexTableau.baseVariables()[pivotElement.pivotRow()];
 
         return SimplexTableau.fromBigSimplexTable(
-                performTriangleRule(pivotElement, simplexTableau),
+                calculateNewBigTableau(pivotElement, simplexTableau),
                 newBaseVariables,
                 newNonBaseVariables
         );
     }
 
-    private PivotWrapper getPivotElement(SimplexTableau currentTableau) {
-        int getPivotColumn = IntStream.range(0, currentTableau.goalCoefficients().length)
-                .reduce((i, j) -> currentTableau.goalCoefficients()[i] < currentTableau.goalCoefficients()[j] ? i : j)
-                .orElseThrow(
-                        () -> new IllegalStateException("No most negative row index found")
-                );
-        double[] pivotRowHelper = IntStream.range(0, currentTableau.rightSide().length)
-                .mapToDouble(i -> currentTableau.rightSide()[i] /currentTableau.simplexTable()[i][getPivotColumn])
-                .toArray();
-        int getPivotRowIndex = 0;
-        double smallestPivotHelper = -1;
-        for (int i = 0; i < pivotRowHelper.length; i++) {
-            if (pivotRowHelper[i] > 0 && (pivotRowHelper[i] < smallestPivotHelper || smallestPivotHelper == -1)) {
-                smallestPivotHelper = pivotRowHelper[i];
-                getPivotRowIndex = i;
-            }
-        }
-
-        double pivotElement = currentTableau.simplexTable()[getPivotRowIndex][getPivotColumn];
-        return new PivotWrapper(getPivotColumn, getPivotRowIndex, pivotElement);
-    }
-
-    private double[][] performTriangleRule(PivotWrapper pivotElement, SimplexTableau simplexTableau) {
-        //update goal
-        double[][] bigSimplexTable = simplexTableau.makeToBigSimplexTable();
-        double[][] newBigSimplexTable = new double[bigSimplexTable.length][bigSimplexTable[0].length];
-        int newPivotRowIndex = pivotElement.pivotRow() +1;
-        int newPivotColumnIndex = pivotElement.pivotColumn();
-        for (int i = 0; i < bigSimplexTable.length; i++) {
-            for (int j = 0; j < bigSimplexTable[0].length; j++) {
-                if (i == newPivotRowIndex && j == newPivotColumnIndex) {
+    private double[][] calculateNewBigTableau(PivotWrapper pivotElement, SimplexTableau simplexTableau) {
+        double[][] oldBigSimplexTable = simplexTableau.makeToBigSimplexTable();
+        double[][] newBigSimplexTable = new double[oldBigSimplexTable.length][oldBigSimplexTable[0].length];
+        int pivotRowBigTableau = pivotElement.pivotRow() + 1;
+        for (int i = 0; i < oldBigSimplexTable.length; i++) {
+            for (int j = 0; j < oldBigSimplexTable[0].length; j++) {
+                if (i == pivotRowBigTableau + 1 && j == pivotElement.pivotColumn()) {
                     newBigSimplexTable[i][j] = 1 / pivotElement.pivotElement();
-                } else if (i == newPivotRowIndex) {
-                    newBigSimplexTable[i][j] = bigSimplexTable[i][j] / pivotElement.pivotElement();
-                } else if (j == newPivotColumnIndex) {
-                    newBigSimplexTable[i][j] = -bigSimplexTable[i][j] / pivotElement.pivotElement();
+                } else if (i == pivotRowBigTableau) {
+                    newBigSimplexTable[i][j] = oldBigSimplexTable[i][j] / pivotElement.pivotElement();
+                } else if (j == pivotElement.pivotColumn()) {
+                    newBigSimplexTable[i][j] = oldBigSimplexTable[i][j] / (-pivotElement.pivotElement());
                 } else {
-                    newBigSimplexTable[i][j] = bigSimplexTable[i][j] -
-                            (bigSimplexTable[i][newPivotColumnIndex] * bigSimplexTable[newPivotRowIndex][j])
+                    newBigSimplexTable[i][j] = oldBigSimplexTable[i][j]
+                            - (oldBigSimplexTable[pivotRowBigTableau][j] * oldBigSimplexTable[i][pivotElement.pivotColumn()])
                                     / pivotElement.pivotElement();
                 }
             }
         }
-
         return newBigSimplexTable;
+    }
+
+    private PivotWrapper getPivotElement(SimplexTableau simplexTableau) {
+        int columnIndex = getPivotColumn(simplexTableau.goalCoefficients());
+        int rowIndex = getPivotRow(columnIndex, simplexTableau);
+        return new PivotWrapper(columnIndex, rowIndex, simplexTableau.simplexTable()[rowIndex][columnIndex]);
+    }
+
+    private int getPivotColumn(double[] goalCoefficients) {
+        return IntStream.range(0, goalCoefficients.length)
+                .reduce((i, j) -> goalCoefficients[i] < goalCoefficients[j] ? i : j)
+                .orElseThrow(() -> new IllegalStateException("pivot-column not found")
+        );
+    }
+
+    private int getPivotRow(int pivotColumn, SimplexTableau simplexTableau) {
+        int[] validIndicesList = IntStream.range(0, simplexTableau.simplexTable().length)
+                .filter(i -> simplexTableau.simplexTable()[i][pivotColumn] > 0).toArray();
+        return IntStream.of(validIndicesList)
+                .reduce((i, j) -> (simplexTableau.rightSide()[i] / simplexTableau.simplexTable()[i][pivotColumn] < simplexTableau.rightSide()[j] / simplexTableau.simplexTable()[j][pivotColumn]) ? i : j)
+                .orElseThrow(() -> new IllegalStateException("pivot-row not found")
+        );
+    }
+
+    private boolean isUnLimited(SimplexTableau simplexTableau) {
+        int pivotColumn = getPivotColumn(simplexTableau.goalCoefficients());
+        return IntStream.range(0, simplexTableau.simplexTable().length).allMatch(i -> simplexTableau.simplexTable()[i][pivotColumn] <= 0);
     }
 
 }
 
 
-
-
-record PivotWrapper(
-        int pivotColumn,
-        int pivotRow,
-        double pivotElement
+record ResultSimplexTableaus(
+        List<SimplexTableau> simplexTableaus,
+        boolean isUnlimited
 ) {
 }
 

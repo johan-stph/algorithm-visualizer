@@ -55,7 +55,8 @@ class SimplexModelTest {
                 new String[]{"x1", "x2"},
                 new double[]{10.0, 30.0, 9.0},
                 new double[]{-30.0, -25.0},
-                0
+                0,
+                null
         );
 
         SimplexTableau simplexTableau = simplexModel.toTablou();
