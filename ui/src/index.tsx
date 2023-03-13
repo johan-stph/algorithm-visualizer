@@ -5,11 +5,11 @@ import {store} from './app/store';
 import App from './App';
 
 import './index.css';
-import {createBrowserRouter, RouterProvider,} from "react-router-dom";
+import {createHashRouter, RouterProvider,} from "react-router-dom";
 import Error404Page from "./components/ErrorPage";
 import {CostEfficientAllocationComponent} from "./components/CostEfficientAllocationComponent";
 
-const router = createBrowserRouter([
+const router = createHashRouter([
         {
             path: "/algorithm-visualizer",
             element: <App/>,
