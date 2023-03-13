@@ -11,12 +11,12 @@ import {CostEfficientAllocationComponent} from "./components/CostEfficientAlloca
 
 const router = createBrowserRouter([
         {
-            path: "/",
+            path: "/algorithm-visualizer",
             element: <App/>,
             errorElement: <Error404Page></Error404Page>
         },
         {
-            path: "/cost-efficient-allocation",
+            path: "/algorithm-visualizer/cost-efficient-allocation",
             element: <CostEfficientAllocationComponent/>,
         }
     ],
