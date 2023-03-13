@@ -2,6 +2,7 @@
   "name": "ui",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://johan-steph.github.io/algorithm-visualizer",
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.3",
     "@testing-library/jest-dom": "^5.16.5",
