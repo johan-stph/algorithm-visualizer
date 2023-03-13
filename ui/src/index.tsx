@@ -11,12 +11,12 @@ import {CostEfficientAllocationComponent} from "./components/CostEfficientAlloca
 
 const router = createHashRouter([
         {
-            path: "/algorithm-visualizer",
+            path: "/",
             element: <App/>,
             errorElement: <Error404Page></Error404Page>
         },
         {
-            path: "/algorithm-visualizer/cost-efficient-allocation",
+            path: "/cost-efficient-allocation",
             element: <CostEfficientAllocationComponent/>,
         }
     ],
