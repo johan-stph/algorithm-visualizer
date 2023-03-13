@@ -7,17 +7,33 @@ import App from './App';
 import './index.css';
 import {createHashRouter, RouterProvider,} from "react-router-dom";
 import Error404Page from "./components/ErrorPage";
-import {CostEfficientAllocationComponent} from "./components/CostEfficientAllocationComponent";
+import {CostEfficientAllocationComponent} from "./components/standortplanung/cost-efficient-allocation/CostEfficientAllocationComponent";
+import Or1Overview from "./components/or1/Or1Overview";
+import StandortplanungOverview from "./components/standortplanung/StandortplanungOverview";
+import SimplexComponent from "./components/or1/simplex/SimplexComponent";
 
 const router = createHashRouter([
         {
             path: "/",
             element: <App/>,
-            errorElement: <Error404Page></Error404Page>
+            errorElement: <Error404Page/>
         },
         {
-            path: "/cost-efficient-allocation",
+            path: "sp",
+            element: <StandortplanungOverview/>,
+        }
+        ,
+        {
+            path: "sp/cost-efficient-allocation",
             element: <CostEfficientAllocationComponent/>,
+        },
+        {
+            path: "/or1",
+            element: <Or1Overview/>,
+        },
+        {
+            path: "/or1/simplex",
+            element: <SimplexComponent/>,
         }
     ],
 );
