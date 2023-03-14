@@ -53,7 +53,7 @@ on:
 env:
   PROJECT_ID: algorithm-visualizer-380615
   GAR_LOCATION: europe-west3
-  REPOSITORY: recipebackendnew-repository
+  REPOSITORY: algorithm-visualizer-repository
   SERVICE: algorithm-visualizer
   REGION: europe-west3
 
