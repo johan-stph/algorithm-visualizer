@@ -80,7 +80,7 @@ jobs:
 
       - name: Build with Maven
         run: mvn -B package --file pom.xml
-
+        
       - name: Google Auth
         id: auth
         uses: 'google-github-actions/auth@v0'
