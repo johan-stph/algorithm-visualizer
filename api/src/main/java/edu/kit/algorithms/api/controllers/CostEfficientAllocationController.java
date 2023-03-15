@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 public class CostEfficientAllocationController {
 
         @GetMapping
-        @CrossOrigin(origins = "http://localhost:3000")
         public ResponseEntity<CostEfficientAllocation.ResultOfCostEfficientAllocation> calculateCostEfficientAllocation(@RequestParam(name = "Q") double squareMeters,
                                                        @RequestParam(name = "Pz") double centerPricePerSquareMeter,
                                                        @RequestParam(name = "Po") double outerPricePerSquareMeter,
