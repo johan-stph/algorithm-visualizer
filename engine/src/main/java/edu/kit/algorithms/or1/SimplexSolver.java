@@ -98,10 +98,3 @@ public class SimplexSolver {
 }
 
 
-record ResultSimplexTableaus(
-        List<SimplexTableau> simplexTableaus,
-        boolean isUnlimited
-) {
-}
-
-

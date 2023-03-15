@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import axios from "axios";
 
 export default function SimplexComponent() {
     const [goalCoefficient, setGoalCoefficient] = useState<number[]>(Array(3).fill(0));
@@ -6,6 +7,7 @@ export default function SimplexComponent() {
         .fill(Array(4)
             .fill(0)));
     const [minOrMax, setMinOrMax] = useState<"min" | "max">("max");
+    const [constraintSigns, setConstraintSigns] = useState<("<=" | ">=" | "=")[]>(Array(3).fill("<="));
     return (
         <div className="flex flex-col items-center min-h-screen bg-gray-100">
             <h1 className="text-3xl font-bold my-8">Simplex Algorithmus</h1>
@@ -25,15 +27,15 @@ export default function SimplexComponent() {
                                 return
                             }
                             let intValue = parseInt(e.target.value)
-                            if (!intValue || intValue > 5 || intValue < 1) {
+                            if (intValue > 5 || intValue < 1) {
                                 return
                             }
                             setConstraintCoefficients(prev => {
                                 return prev.map(row => {
-                                    if (row.length < intValue) {
+                                    if (row.length < intValue + 1) {
                                         return [...row, 0]
                                     } else {
-                                        return row.slice(0, intValue)
+                                        return row.slice(0, intValue + 1)
                                     }
                                 })
                             })
@@ -56,7 +58,7 @@ export default function SimplexComponent() {
                                 return
                             }
                             let intValue = parseInt(e.target.value)
-                            if (!intValue || intValue > 5 || intValue < 1) {
+                            if (intValue > 5 || intValue < 1) {
                                 return
                             }
                             setConstraintCoefficients(prev => {
@@ -84,11 +86,20 @@ export default function SimplexComponent() {
 
                 <div className="w-full">
                     {[...Array(constraintCoefficients.length)].map((__, i) => {
-                            return convertToTableRow(constraintCoefficients[0].length - 1, i, constraintCoefficients[i], setConstraintCoefficients)
+                            return convertToTableRow(constraintCoefficients[0].length - 1, i, constraintCoefficients[i], setConstraintCoefficients,
+                                constraintSigns[i], setConstraintSigns)
                         }
                     )}
                 </div>
             </div>
+            <button  className="mt-4 bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded mb-4 md:mb-0 md:mr-4"
+
+            onClick={() => {
+                solveTableau(goalCoefficient, constraintCoefficients, constraintSigns, minOrMax)}
+            }>
+                Submit
+            </button>
+
         </div>
 
 
@@ -122,9 +133,6 @@ const convertToGoalRow = (amountOfVariables: number, goalCoefficients: number[],
                                     return;
                                 }
                                 let intValue = parseInt(e.target.value);
-                                if (!intValue) {
-                                    return;
-                                }
                                 let newGoalCoefficients = [...goalCoefficients];
                                 newGoalCoefficients[i] = intValue;
                                 setGoalCoefficients(newGoalCoefficients);
@@ -137,12 +145,12 @@ const convertToGoalRow = (amountOfVariables: number, goalCoefficients: number[],
                 ))}
             </div>
         </div>
-
     );
 }
 
 const convertToTableRow = (amountOfVariables: number, constraintIndex: number, constraintCoefficients: number[],
-                           setConstraintCoefficients: (prev: any) => void) => {
+                           setConstraintCoefficients: (prev: any) => void,
+                           constraintSings: string, setConstraintSigns: { (value: React.SetStateAction<("<=" | ">=" | "=")[]>): void; (arg0: (prev: any) => any[]): void; }) => {
     return (
         <div className="border-b border-gray-200 hover:bg-gray-100 flex items-center">
             {[...Array(amountOfVariables)].map((_, i) =>
@@ -154,9 +162,6 @@ const convertToTableRow = (amountOfVariables: number, constraintIndex: number, c
                                    return
                                }
                                let intValue = parseInt(e.target.value)
-                               if (!intValue) {
-                                   return
-                               }
                                let newConstraintCoefficients = [...constraintCoefficients]
                                newConstraintCoefficients[i] = intValue
 
@@ -165,7 +170,6 @@ const convertToTableRow = (amountOfVariables: number, constraintIndex: number, c
                                    newPrev[constraintIndex] = newConstraintCoefficients
                                    return newPrev
                                })
-
                            }}
                            type="number"/>
                     <span className="mx-2">x{i + 1}</span>
@@ -173,11 +177,17 @@ const convertToTableRow = (amountOfVariables: number, constraintIndex: number, c
                 </div>
             )}
             <div className="py-2">
-                <select className="mr-2 border border-gray-300 p-2 rounded-lg">
-                    <option defaultValue="&lt;=">&lt;=</option>
+                <select className="mr-2 border border-gray-300 p-2 rounded-lg" defaultValue={"&lt;="}
+                onChange={(e) => setConstraintSigns((prev: any) => {
+                    let newPrev = [...prev]
+                    newPrev[constraintIndex] = e.target.value
+                    return newPrev
+                })}>
+                    <option value="&lt;=">&lt;=</option>
                     <option value="&gt;=">&gt;=</option>
                     <option value="=">=</option>
                 </select>
+
             </div>
             <div className="py-2 flex-1">
                 <input className="w-full border border-gray-300 p-2 rounded-lg"
@@ -187,9 +197,6 @@ const convertToTableRow = (amountOfVariables: number, constraintIndex: number, c
                                return
                            }
                            let intValue = parseInt(e.target.value)
-                           if (!intValue) {
-                               return
-                           }
                            let newConstraintCoefficients = [...constraintCoefficients]
                            newConstraintCoefficients[constraintCoefficients.length - 1] = intValue
 
@@ -207,6 +214,17 @@ const convertToTableRow = (amountOfVariables: number, constraintIndex: number, c
     )
 }
 
-const solveTableau = (goalCoefficient: number[], constraintCoefficients: number[][], minOrMax: string) => {
+const solveTableau = (goalCoefficient: number[], constraintCoefficients: number[][], constraintSigns: ("<=" | ">=" | "=")[], minOrMax: string) => {
+    console.log(goalCoefficient, constraintCoefficients,constraintSigns, minOrMax)
+    axios.post("http://localhost:8080/api/v1/simplex", {
+        goalCoefficients: goalCoefficient,
+        constraintCoefficients: constraintCoefficients,
+        constraintSigns: constraintSigns,
+        minOrMax: minOrMax.toUpperCase()
+    }).then((response) => {
+        console.log(response)
+    }
+    )
+
 
 }

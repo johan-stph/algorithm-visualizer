@@ -17,4 +17,13 @@ public enum EquationUtils {
         this.symbol = symbol;
     }
 
+    public static EquationUtils fromString(String symbol) {
+        for (EquationUtils equationUtils : EquationUtils.values()) {
+            if (equationUtils.symbol.equals(symbol)) {
+                return equationUtils;
+            }
+        }
+        throw new IllegalArgumentException("No enum constant " + symbol);
+    }
+
 }
