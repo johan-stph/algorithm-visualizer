@@ -28,7 +28,7 @@ public class SimplexModel {
             return false;
         }
         return constraintEquations.stream().allMatch(tupel -> tupel.first() == EquationUtils.LESS_THAN_OR_EQUAL_TO
-        && tupel.second() >= 0);
+                && tupel.second() >= 0);
     }
 
     public SimplexTableau toTablou() {

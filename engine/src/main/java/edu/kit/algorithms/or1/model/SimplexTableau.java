@@ -2,7 +2,6 @@ package edu.kit.algorithms.or1.model;
 
 import java.util.Arrays;
 import java.util.Objects;
-import java.util.stream.IntStream;
 
 public record SimplexTableau(
         double[][] simplexTable,
@@ -11,7 +10,6 @@ public record SimplexTableau(
         double[] rightSide,
         double[] goalCoefficients,
         double goalFunctionValue,
-
         Object notes
 
 

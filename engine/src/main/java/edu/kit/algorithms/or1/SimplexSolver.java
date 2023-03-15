@@ -9,8 +9,6 @@ import java.util.List;
 import java.util.stream.IntStream;
 
 public class SimplexSolver {
-
-
     public ResultSimplexTableaus solveTableau(SimplexTableau simplexTableau) {
         // check if tableau is already solved
         if (simplexTableau.isSolved()) {
@@ -95,13 +93,6 @@ public class SimplexSolver {
         return IntStream.range(0, simplexTableau.simplexTable().length).allMatch(i -> simplexTableau.simplexTable()[i][pivotColumn] <= 0);
     }
 
-}
-
-
-record ResultSimplexTableaus(
-        List<SimplexTableau> simplexTableaus,
-        boolean isUnlimited
-) {
 }
 
 
