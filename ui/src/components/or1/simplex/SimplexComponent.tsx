@@ -229,7 +229,7 @@ const convertToTableRow = (amountOfVariables: number, constraintIndex: number, c
 const solveTableau = (goalCoefficient: number[], constraintCoefficients: number[][], constraintSigns: ("<=" | ">=" | "=")[], minOrMax: string,
                       setResult: (prev: any) => void) => {
     console.log(goalCoefficient, constraintCoefficients, constraintSigns, minOrMax)
-    axios.post<any, AxiosResponse<ResultOfSimplex>>("http://localhost:8080/api/v1/simplex", {
+    axios.post<any, AxiosResponse<ResultOfSimplex>>("https://algorithm-visualizer-biwyccd76a-ey.a.run.app/api/v1/simplex", {
         goalCoefficients: goalCoefficient,
         constraintCoefficients: constraintCoefficients,
         constraintSigns: constraintSigns,

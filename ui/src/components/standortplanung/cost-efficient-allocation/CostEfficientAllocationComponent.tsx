@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import axios from "axios";
+import {roundValue} from "../../or1/simplex/SimplexResult";
 
 export const CostEfficientAllocationComponent = () => {
     const [squareMeters, setSquareMeters] = useState('50');
@@ -15,7 +16,7 @@ export const CostEfficientAllocationComponent = () => {
 
     const handleSubmit = async (e: { preventDefault: () => void; }) => {
         e.preventDefault();
-        const result = await axios.get(`http://localhost:8080/api/v1/cost-efficient-allocation`, {
+        const result = await axios.get(`https://algorithm-visualizer-biwyccd76a-ey.a.run.app/api/v1/cost-efficient-allocation`, {
             params: {
                 Q: squareMeters,
                 Pz: centerPricePerSquareMeter,
@@ -39,13 +40,13 @@ export const CostEfficientAllocationComponent = () => {
                 <div className="m-10 text-2xl font-bold text-gray-800">Results</div>
                 <div className="flex flex-col items-center md:items-start">
                     <div className="m-2 text-lg text-gray-700">
-                        r: {r}
+                        r: {roundValue(Number.parseFloat(r), 3)}
                     </div>
                     <div className="m-2 text-lg text-gray-700">
-                        d*: {optimalDistance}
+                        d*: {roundValue(Number.parseFloat(optimalDistance), 3)}
                     </div>
                     <div className="m-2 text-lg text-gray-700">
-                        C(d*): {minimalCost}
+                        C(d*): {roundValue(Number.parseFloat(minimalCost), 3)}
                     </div>
                 </div>
             </div>

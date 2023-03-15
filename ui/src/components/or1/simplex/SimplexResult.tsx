@@ -83,7 +83,7 @@ const roundSimplexTableaus = (simplexTableaus: SimplexResultProps[], digits= 3) 
     })
 }
 
-const roundValue = (value: number, digits: number) =>  {
+export const roundValue = (value: number, digits: number) =>  {
     return Math.round(value * Math.pow(10, digits)) / Math.pow(10, digits)
 }
 
