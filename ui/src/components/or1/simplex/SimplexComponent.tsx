@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
-import axios from "axios";
+import axios, {AxiosResponse} from "axios";
+import SimplexResult, {ResultOfSimplex} from "./SimplexResult";
 
 export default function SimplexComponent() {
     const [goalCoefficient, setGoalCoefficient] = useState<number[]>(Array(3).fill(0));
@@ -8,6 +9,7 @@ export default function SimplexComponent() {
             .fill(0)));
     const [minOrMax, setMinOrMax] = useState<"min" | "max">("max");
     const [constraintSigns, setConstraintSigns] = useState<("<=" | ">=" | "=")[]>(Array(3).fill("<="));
+    const [result, setResult] = useState<ResultOfSimplex | null>(null);
     return (
         <div className="flex flex-col items-center min-h-screen bg-gray-100">
             <h1 className="text-3xl font-bold my-8">Simplex Algorithmus</h1>
@@ -39,6 +41,14 @@ export default function SimplexComponent() {
                                     }
                                 })
                             })
+                            setGoalCoefficient(prev => {
+                                    if (prev.length < intValue) {
+                                        return [...prev, 0]
+                                    } else {
+                                        return prev.slice(0, intValue)
+                                    }
+                                }
+                            )
                         }}
                     />
                 </div>
@@ -92,16 +102,18 @@ export default function SimplexComponent() {
                     )}
                 </div>
             </div>
-            <button  className="mt-4 bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded mb-4 md:mb-0 md:mr-4"
+            <button
+                className="mt-4 bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded mb-4 md:mb-0 md:mr-4"
 
-            onClick={() => {
-                solveTableau(goalCoefficient, constraintCoefficients, constraintSigns, minOrMax)}
-            }>
+                onClick={() => {
+                    solveTableau(goalCoefficient, constraintCoefficients, constraintSigns, minOrMax, setResult)
+                }
+                }>
                 Submit
             </button>
 
+            {result && <SimplexResult isUnlimited={result.isUnlimited} simplexTableaus={result.simplexTableaus}/>}
         </div>
-
 
     );
 }
@@ -178,11 +190,11 @@ const convertToTableRow = (amountOfVariables: number, constraintIndex: number, c
             )}
             <div className="py-2">
                 <select className="mr-2 border border-gray-300 p-2 rounded-lg" defaultValue={"&lt;="}
-                onChange={(e) => setConstraintSigns((prev: any) => {
-                    let newPrev = [...prev]
-                    newPrev[constraintIndex] = e.target.value
-                    return newPrev
-                })}>
+                        onChange={(e) => setConstraintSigns((prev: any) => {
+                            let newPrev = [...prev]
+                            newPrev[constraintIndex] = e.target.value
+                            return newPrev
+                        })}>
                     <option value="&lt;=">&lt;=</option>
                     <option value="&gt;=">&gt;=</option>
                     <option value="=">=</option>
@@ -214,17 +226,18 @@ const convertToTableRow = (amountOfVariables: number, constraintIndex: number, c
     )
 }
 
-const solveTableau = (goalCoefficient: number[], constraintCoefficients: number[][], constraintSigns: ("<=" | ">=" | "=")[], minOrMax: string) => {
-    console.log(goalCoefficient, constraintCoefficients,constraintSigns, minOrMax)
-    axios.post("http://localhost:8080/api/v1/simplex", {
+const solveTableau = (goalCoefficient: number[], constraintCoefficients: number[][], constraintSigns: ("<=" | ">=" | "=")[], minOrMax: string,
+                      setResult: (prev: any) => void) => {
+    console.log(goalCoefficient, constraintCoefficients, constraintSigns, minOrMax)
+    axios.post<any, AxiosResponse<ResultOfSimplex>>("http://localhost:8080/api/v1/simplex", {
         goalCoefficients: goalCoefficient,
         constraintCoefficients: constraintCoefficients,
         constraintSigns: constraintSigns,
         minOrMax: minOrMax.toUpperCase()
     }).then((response) => {
-        console.log(response)
-    }
+        setResult(response.data)
+        }
     )
-
-
 }
+
+

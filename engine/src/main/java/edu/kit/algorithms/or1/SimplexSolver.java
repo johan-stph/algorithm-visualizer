@@ -9,8 +9,6 @@ import java.util.List;
 import java.util.stream.IntStream;
 
 public class SimplexSolver {
-
-
     public ResultSimplexTableaus solveTableau(SimplexTableau simplexTableau) {
         // check if tableau is already solved
         if (simplexTableau.isSolved()) {

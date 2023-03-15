@@ -23,15 +23,14 @@ public class SimplexController {
     @PostMapping()
     @CrossOrigin(origins = "*")
     public ResponseEntity<ResultSimplexTableaus> calculateSimplex(@RequestBody SimplexDTO dto) {
-        String [] variables = IntStream.range(0, dto.goalCoefficients().length).mapToObj(i -> "x" + i).toArray(String[]::new);
+        String[] variables = IntStream.range(0, dto.goalCoefficients().length).mapToObj(i -> "x" + (i + 1)).toArray(String[]::new);
         MaxOrMin maxOrMin = MaxOrMin.valueOf(dto.minOrMax());
         double[][] constraintCoefficients = Arrays.stream(dto.constraintCoefficients())
-                           .map(row -> Arrays.copyOf(row, row.length - 1))
-                           .toArray(double[][]::new);
+                .map(row -> Arrays.copyOf(row, row.length - 1))
+                .toArray(double[][]::new);
         double[] bVector = Arrays.stream(dto.constraintCoefficients())
-                        .mapToDouble(row -> row[row.length-1])
-                        .toArray();
-        //Create Equation Vector with bVector and sings
+                .mapToDouble(row -> row[row.length - 1])
+                .toArray();
         List<edu.kit.algorithms.utils.Tupel<edu.kit.algorithms.or1.model.EquationUtils, Double>> constraintEquations = IntStream.range(0, dto.constraintCoefficients().length)
                 .mapToObj(i -> new edu.kit.algorithms.utils.Tupel<>(EquationUtils.fromString(dto.constraintSigns().get(i)), bVector[i]))
                 .toList();
