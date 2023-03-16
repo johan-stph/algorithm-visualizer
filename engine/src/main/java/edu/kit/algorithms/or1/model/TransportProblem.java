@@ -7,7 +7,7 @@ import java.util.stream.IntStream;
 public class TransportProblem {
 
     //C
-    private final int[][] costs;
+    private final double[][] costs;
 
     //a
     private final int[] supply;
@@ -23,14 +23,14 @@ public class TransportProblem {
         return supply;
     }
 
-    public TransportProblem(int[][] costs, int[] supply, int[] demand) {
+    public TransportProblem(double[][] costs, int[] supply, int[] demand) {
         this.costs = costs;
         this.supply = supply;
         this.demand = demand;
     }
 
-    public int getValue(int[][] x) {
+    public double getValue(int[][] x) {
 
-        return IntStream.range(0, x.length * x[0].length).parallel().map(id -> Arrays.stream(x).flatMapToInt(Arrays::stream).toArray()[id] * Arrays.stream(costs).flatMapToInt(Arrays::stream).toArray()[id]).reduce(0, Integer::sum);
+        return IntStream.range(0, x.length * x[0].length).parallel().mapToDouble(id -> Arrays.stream(x).flatMapToInt(Arrays::stream).toArray()[id] * Arrays.stream(costs).flatMapToDouble(Arrays::stream).toArray()[id]).reduce(0, Double::sum);
     }
 }
