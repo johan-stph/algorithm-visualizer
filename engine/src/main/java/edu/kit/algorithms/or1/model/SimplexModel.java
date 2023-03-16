@@ -34,7 +34,7 @@ public class SimplexModel {
     public SimplexTableau toTablou() {
         if (isStandardForm()) {
             return new SimplexTableau(constraintCoefficients,
-                    IntStream.range(0, constraintEquations.size()).mapToObj(i -> "x" + (i + constraintEquations.size())).toArray(String[]::new),
+                    IntStream.range(0, constraintEquations.size()).mapToObj(i -> "x" + (i + 1 + variables.length)).toArray(String[]::new),
                     variables,
                     constraintEquations.stream().mapToDouble(Tupel::second).toArray(),
                     Arrays.stream(goalCoefficients).map(x -> -x).toArray(),
