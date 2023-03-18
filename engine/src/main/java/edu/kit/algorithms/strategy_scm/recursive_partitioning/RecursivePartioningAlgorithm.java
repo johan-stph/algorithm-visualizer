@@ -2,8 +2,6 @@ package edu.kit.algorithms.strategy_scm.recursive_partitioning;
 
 import edu.kit.algorithms.strategy_scm.metric.L2Metric;
 import edu.kit.algorithms.utils.*;
-import lombok.RequiredArgsConstructor;
-
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,19 +11,16 @@ import java.util.stream.Stream;
 
 public class RecursivePartioningAlgorithm {
 
-    private final List<PointWithWeightName> activities;
 
     private final double betaFactor;
-    private final int amountOfPartitions;
+
     private final L2Metric l2 = L2Metric.getInstance();
 
 
-    public RecursivePartioningAlgorithm(List<PointWithWeightName> activities,
-                                        double betaFactor,
-                                        int amountOfPartitions) {
-        this.activities = activities;
+    public RecursivePartioningAlgorithm(
+                                        double betaFactor
+                                       ) {
         this.betaFactor = betaFactor;
-        this.amountOfPartitions = amountOfPartitions;
 
     }
 
@@ -36,14 +31,14 @@ public class RecursivePartioningAlgorithm {
         double totalWeight = activityList.stream().mapToDouble(p -> p.pointWithWeight().weight()).sum();
         //x split
         var blAndBr = getBLandBrRight(activityList, true);
-        double xSplitBalance = calculateMaxBalance(blAndBr.first(),
-                blAndBr.second(),
+        double xSplitBalance = calculateMaxBalance(blAndBr.first(), blAndBr.second(),
                 ql,
                 qr,
                 totalWeight / (ql + qr));
-        double xSplitCp = calculateMaxCp(
+        double xSplitCp = calculateCp(
                 blAndBr.first(),
-                blAndBr.second()
+                blAndBr.second(),
+                true
         );
         //y split
         var blAndBrY = getBLandBrRight(activityList, false);
@@ -53,23 +48,18 @@ public class RecursivePartioningAlgorithm {
                 ql,
                 qr,
                 totalWeight / (ql + qr));
-        double ySplitCp = calculateMaxCp(
-                blAndBrY.first(),
-                blAndBrY.second()
-        );
-
+        double ySplitCp = calculateCp(
+                blAndBrY.first(), blAndBrY.second(), false);
         Tupel<Double, Double> rk = calculateRK(xSplitBalance, ySplitBalance, xSplitCp, ySplitCp);
-        if (rk.first() > rk.second()) {
+        if (rk.first() <= rk.second()) {
             return new PartitionStep(blAndBr.first(), blAndBr.second());
         } else {
             return new PartitionStep(blAndBrY.first(), blAndBrY.second());
         }
     }
 
-    public Tupel<List<PointWithWeightName>, List<PointWithWeightName>> getBLandBrRight(List<PointWithWeightName> actvitylist,
-                                                                                       boolean xDirection) {
+    public Tupel<List<PointWithWeightName>, List<PointWithWeightName>> getBLandBrRight(List<PointWithWeightName> actvitylist, boolean xDirection) {
         double totalWeight = actvitylist.stream().mapToDouble(p -> p.pointWithWeight().weight()).sum();
-        double currentWeight = 0;
         List<PointWithWeightName> bl = new ArrayList<>();
         List<PointWithWeightName> br = new ArrayList<>();
         List<PointWithWeightName> sortedActivities = actvitylist.stream().sorted((p1, p2) -> {
@@ -80,23 +70,47 @@ public class RecursivePartioningAlgorithm {
             }
         }).toList();
 
-        for (int i = 0; i < sortedActivities.size(); i++) {
-            if (currentWeight + sortedActivities.get(i).pointWithWeight().weight() > totalWeight / 2) {
-                if (Math.abs(currentWeight - totalWeight / 2) < Math.abs(currentWeight + sortedActivities.get(i).pointWithWeight().weight() - totalWeight / 2)) {
-                    br.addAll(sortedActivities.subList(i, sortedActivities.size()));
-                } else {
-                    bl.add(sortedActivities.get(i));
-                    br.addAll(sortedActivities.subList(i + 1, sortedActivities.size()));
-                }
-                break;
+        List<Tupel<Double, List<PointWithWeightName>>> grouped =
+                sortedActivities.stream()
+                        .collect(Collectors.groupingBy(p -> {
+                            if (xDirection) {
+                                return p.pointWithWeight().p().x();
+                            } else {
+                                return p.pointWithWeight().p().y();
+                            }
+                        }, Collectors.toList()))
+                        .entrySet().stream()
+                        .map(e -> new Tupel<>(e.getKey(), e.getValue()))
+                        .sorted((t1, t2) -> {
+                                    if (xDirection) {
+                                        return Double.compare(t1.first(), t2.first());
+                                    } else {
+                                        return -1 * Double.compare(t1.first(), t2.first());
+                                    }
+                                }
+                        )
+                        .toList();
+
+        double currentWeight = 0;
+        for (int i = 0; i < grouped.size(); i++) {
+            var current = grouped.get(i);
+            double newWeight = current.second().stream().mapToDouble(p -> p.pointWithWeight().weight()).sum();
+            if (currentWeight + newWeight <= totalWeight / 2) {
+                bl.addAll(current.second());
+                currentWeight += newWeight;
+                continue;
             }
-            currentWeight += sortedActivities.get(i).pointWithWeight().weight();
-            bl.add(sortedActivities.get(i));
+            if ((currentWeight + newWeight) - (totalWeight / 2) >= (totalWeight / 2) - currentWeight) {
+                grouped.subList(i, grouped.size()).forEach(t -> br.addAll(t.second()));
+                return new Tupel<>(bl, br);
+            }
+            bl.addAll(current.second());
+            grouped.subList(i + 1, grouped.size()).forEach(t -> br.addAll(t.second()));
+            return new Tupel<>(bl, br);
         }
+
         return new Tupel<>(bl, br);
     }
-
-
 
 
     public Tupel<Double, Double> calculateRK(double lp1Balance,
@@ -104,40 +118,37 @@ public class RecursivePartioningAlgorithm {
                                              double lp1Cp,
                                              double lp2Cp) {
 
-        double lp1 =  this.betaFactor * (lp1Balance / Math.max(lp1Balance, lp2Balance)) + (1 - this.betaFactor) *
+        double lp1 = this.betaFactor * (lp1Balance / Math.max(lp1Balance, lp2Balance)) + (1 - this.betaFactor) *
                 (lp1Cp / Math.max(lp1Cp, lp2Cp));
-        double lp2 =  this.betaFactor * (lp2Balance / Math.max(lp1Balance, lp2Balance)) + (1 - this.betaFactor) *
+        double lp2 = this.betaFactor * (lp2Balance / Math.max(lp1Balance, lp2Balance)) + (1 - this.betaFactor) *
                 (lp2Cp / Math.max(lp1Cp, lp2Cp));
         return new Tupel<>(lp1, lp2);
     }
 
-    public double calculateMaxBalance(List<PointWithWeightName> bl, List<PointWithWeightName>  br, double ql, double qr,
+    public double calculateMaxBalance(List<PointWithWeightName> bl, List<PointWithWeightName> br, double ql, double qr,
                                       double mu) {
         double blWeight = bl.stream().mapToDouble(p -> p.pointWithWeight().weight()).sum();
-        double brWeight =  br.stream().mapToDouble(p -> p.pointWithWeight().weight()).sum();
+        double brWeight = br.stream().mapToDouble(p -> p.pointWithWeight().weight()).sum();
         return 1 / mu * Math.max(Math.abs((blWeight / ql) - mu), Math.abs((brWeight / qr) - mu));
     }
 
-    public double calculateMaxCp(List<PointWithWeightName> bl, List<PointWithWeightName> br) {
+    public double calculateCp(List<PointWithWeightName> bl, List<PointWithWeightName> br, boolean xDirection) {
         var convexHull = new ConvexHullGenerator(
                 Stream.concat(bl.stream(), br.stream())
                         .map(p -> new PointWithName(p.name(), p.pointWithWeight().p()))
                         .toList()
         );
-        double maxX = bl.stream().mapToDouble(p -> p.pointWithWeight().p().x()).max().orElseThrow();
-        double minY = bl.stream().mapToDouble(p -> p.pointWithWeight().p().y()).min().orElseThrow();
-        var xIntersection = convexHull.getIntersectionXDirectionPoints(maxX);
-        var yIntersection = convexHull.getIntersectionYDirectionPoints(minY);
+        List<Point> intersections;
 
-        return Math.max(
-                l2.calculate(
-                        xIntersection.get(0),
-                        xIntersection.get(1)
-                ), l2.calculate(
-                        yIntersection.get(0),
-                        yIntersection.get(1)
-                ));
-
+        if (xDirection) {
+            double maxX = bl.stream().mapToDouble(p -> p.pointWithWeight().p().x()).max().orElse(0);
+            intersections = convexHull.getIntersectionXDirectionPoints(maxX);
+        }
+        else {
+            double minY = bl.stream().mapToDouble(p -> p.pointWithWeight().p().y()).min().orElse(0);
+            intersections = convexHull.getIntersectionYDirectionPoints(minY);
+        }
+        return l2.calculate(intersections.get(0), intersections.get(1));
     }
 
 }

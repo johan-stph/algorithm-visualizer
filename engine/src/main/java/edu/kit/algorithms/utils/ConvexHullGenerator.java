@@ -1,6 +1,5 @@
 package edu.kit.algorithms.utils;
 
-import lombok.RequiredArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -9,12 +8,16 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 
-@RequiredArgsConstructor
+
 public class ConvexHullGenerator {
 
     private final List<PointWithName> points;
     private List<PointWithName> convexHull;
 
+    public ConvexHullGenerator(List<PointWithName> points) {
+        this.points = points;
+        this.convexHull = generateConvexHull();
+    }
     public List<PointWithName> generateConvexHull() {
         if (convexHull != null) {
             return convexHull;
