@@ -72,13 +72,13 @@ class RecursivePartioningAlgorithmTest {
 
     @Test
     void calculateRK() {
-    }
+        Tupel<Double, Double> rk = this.recursivePartioningAlgorithm.calculateRK(
+                0.08,
+                0.12,
+                10,
+        6);
 
-    @Test
-    void calculateMaxBalance() {
-    }
-
-    @Test
-    void calculateMaxCp() {
+        assertEquals(0.833, RoundingUtils.round(rk.first(), 3));
+        assertEquals(0.8, rk.second());
     }
 }
